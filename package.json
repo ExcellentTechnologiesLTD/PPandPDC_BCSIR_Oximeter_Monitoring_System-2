@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "node src/index.js",
+        "start": "node index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "",
@@ -14,6 +14,9 @@
         "express": "^4.18.1",
         "nodemon": "^2.0.20",
         "parse": "^3.4.4",
-        "websocket": "^1.0.34"
+        "socket.io": "^4.5.3",
+        "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.4.0",
+        "websocket": "^1.0.34",
+        "ws": "^8.11.0"
     }
 }

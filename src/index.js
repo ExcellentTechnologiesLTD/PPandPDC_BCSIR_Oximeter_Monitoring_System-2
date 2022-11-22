@@ -1,22 +1,27 @@
-// Node.js WebSocket server script
+const express = require("express");
+const app = express();
 const http = require("http");
-const WebSocketServer = require("websocket").server;
+const { Server } = require("socket.io");
+const cors = require("cors");
 
-const server = http.createServer();
-server.listen(9898);
+app.use(cors());
 
-const wsServer = new WebSocketServer({
-    httpServer: server,
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+    },
 });
 
-wsServer.on("request", function(request) {
-    const connection = request.accept(null, request.origin);
-
-    connection.on("message", function(message) {
-        console.log("Received Message:", message.utf8Data);
-        connection.sendUTF("Hi this is WebSocket server!");
+io.on("connection", (socket) => {
+    console.log(`User Connected with Id: ${socket.id}`);
+    socket.on("send_message", (data) => {
+        console.log(socket);
+        socket.broadcast.emit("recieve_message", data);
     });
-    connection.on("close", function(reasonCode, description) {
-        console.log("Client has disconnected.");
-    });
+});
+server.listen(3001, () => {
+    console.log("SERVER IS RUNNING On PORT:", 3001);
+    ``;
 });
